@@ -11,9 +11,14 @@ services:
       - JWT_SECRET=mysecretkey
     depends_on:
       - mongo
+    restart: unless-stopped # Reinicia automaticamente em caso de falhas
 
   mongo:
     image: mongo:4.4.3
     ports:
       - "27017:27017"
-      
+    volumes:
+      - mongo_data:/data/db # Volume para persistência de dados
+
+volumes:
+  mongo_data: # Volume nomeado para o MongoDB
